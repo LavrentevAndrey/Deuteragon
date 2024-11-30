@@ -83,26 +83,27 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD?Variable not set}
 #      - SENTRY_DSN=${SENTRY_DSN}
 
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/utils/health-check/"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+#    healthcheck:
+#      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/utils/health-check/"]
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
 
     build:
       context: ./backend
 
-  frontend:
-    image: '${DOCKER_IMAGE_FRONTEND?Variable not set}:${TAG-latest}'
-    restart: always
-    networks:
-      - default
-    build:
-      context: ./frontend
-      args:
-        - VITE_API_URL=https://api.${DOMAIN?Variable not set}
-        - NODE_ENV=production
+  # frontend:
+  #   image: '${DOCKER_IMAGE_FRONTEND?Variable not set}:${TAG-latest}'
+  #   restart: always
+  #   networks:
+  #     - default
+  #   build:
+  #     context: ./frontend
+  #     args:
+  #       - VITE_API_URL=https://api.${DOMAIN?Variable not set}
+  #       - NODE_ENV=production
 volumes:
   app-db-data:
 
 networks:
+  default:
